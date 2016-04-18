@@ -1,0 +1,23 @@
+		uncore start
+		// << Uncore core regs prolog 
+		// Load 4-B 0x000000003FF01160
+		memread    0x003FF01160    0x00000040; // WB: DATA, STORE
+		// Load 4-B 0x000000003FF01164
+		memread    0x003FF01164    0x00001000; // WB: DATA, STORE
+		// << Uncore core regs data
+		// uc_core [0] - BMR
+		// Load 4-B 0x000000003FF01168
+		memread    0x003FF01168    0x03000002; // WB: DATA, STORE
+		// Load 4-B 0x000000003FF0116C
+		memread    0x003FF0116C    0x00000000; // WB: DATA, STORE
+		// uc_core [1] - PERF_CTL_MSR
+		// Load 4-B 0x000000003FF01170
+		memread    0x003FF01170    0x00000C63; // WB: DATA, STORE
+		// Load 4-B 0x000000003FF01174
+		memread    0x003FF01174    0x00000000; // WB: DATA, STORE
+		// uc_core [2] - HCR
+		// Load 4-B 0x000000003FF01178
+		memread    0x003FF01178    0x00800000; // WB: DATA, STORE
+		// Load 4-B 0x000000003FF0117C
+		memread    0x003FF0117C    0x00000000; // WB: DATA, STORE
+		// uncore end

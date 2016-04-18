@@ -1,0 +1,645 @@
+/**************************************************************************************************
+****  CENTAUR TECHNOLOGY CONFIDENTIAL & TRADE SECRET **********************************************
+***************************************************************************************************
+
+Tracer Basics
+-------------
+  1. The "tracer" is ucode code built into the CPU that lies dormant until activated
+     (via several MSRs, some are protected)
+
+  2. Once activated, various "events" can trigger the tracer
+        event examples
+        --------------
+        particular instruction execution
+        interupts, exceptions, VMX actions, etc.
+        periodic (internal instruction counter overflow)
+        perf counter overflow
+        sproc detects a hang
+
+  3. An event can cause a tracer "state dump"
+        many different dtypes of state dumps (GPRs, internal regs, APIC regs, MTRRs, cache contents, etc)
+
+  4. An event can also cause a tracer "action" (happens after the dump)
+        action examples
+        ---------------
+        resetting various states (WBIVD, clear branch prediction, etc.) 
+        going into special SMI mode, taking a shutdown
+
+  5. The "programming" of the tracer is very flexible
+        any number of events can be enabled
+        each with a specialized list of actions
+        up to a maximum of four different sets of events-actions
+
+  6. A "dump-reload" function is available (via protected MSR)
+        loads contents of tracer dump into appropriate CPU state
+         & restart execution with that new state
+
+        
+*********************************************************************************************************/
+
+
+
+//---------------------------------------------------------------------------------
+//--TRACER definition items--------------------------------------------------------
+//---------------------------------------------------------------------------------
+
+//--processor idd (in dump header)
+  #define CNR_TRACER_VERSION   0x36   
+
+//------------------------------------------------------------
+//--sizes of the various state dumps---------------------------------
+//  starting dump/reload addresses should be 8B aligned for best perf
+//  sizes of dumps alinged so that any combination of dumps has size 0 mod 8
+//  note: not all locations in these sizes are actually stored to
+//
+  #define BASE_HDR_DUMP_SIZE      (5*8)           
+    #define SUBHDR_EXCEPT_DUMP_SIZE     (2*8)
+    #define SUBHDR_NANO_PEBS_SIZE       (2*8)
+    #define SUBHDR_PEBS_DUMP_SIZE       (9*8)
+    #define JWAD_DUMP_SIZE              (10*8)  
+    #define PEBS_JWAD2_DUMP_SIZE        (12*8)
+    #define MPERF_DUMP_SIZE_v34         (2*8)  
+    #define MPERF_DUMP_SIZE_v32         (1*8)  
+
+  #define FP_DUMP_SIZE        (9*8+8*16+16*16+16*16) // 9 misc regs, 8 mmx/x87, 16 sse + 16 ymm_h
+    
+  #define VMCS_DUMP_SIZE       (4*4 + 5*8)
+
+  #define SMM_DUMP_SIZE        768            // how much space to allow for smm dump, THSI IS PADDED
+    // this means that the "last" byte of the smm dump (actually the first thing stored
+    // since smm dump runs backward) is SMM_DUMP_SIZE higher than the last byte
+    // of the dump that preceded the smm
+
+  #define PRAM_DUMP_SIZE      PRAM_PERM_SIZE
+
+  #define APIC_DUMP_SIZE      (64*4)           // dump all 64 *32bit* reg addrs (0 - 63) even though some don't exists
+                                               // start with bank 0 reg 0, thru reg 31, then bank 1, reg 0 etc        
+
+  #define CTRL_DUMP_SIZE      (3*256+32*8)     // 3 banks of 32 8B regs (C0,C1,C2) + 32 8B ctr regs
+
+  #define UC_REGS_DUMP_SIZE    (88*8 + 4*8 + 32*8)   // 88 8B uncore regs + 4 8B UC counters + 32 8B l2 regs
+
+  #define UC_CORE_REGS_DUMP_SIZE   (8*8)       // 8 8B uncore regs
+
+  #define L2_CACHE_DUMP_SIZE    0x200000
+
+  #define CORE_DUMP_SIZE        0x528         // Sadly this might change
+
+//  #define DANS_CACHE_DUMP_OFFSET   0x00400000 
+ 
+    /***********************
+    Dcache (MOB data) 64K  = 64 indexes * 16 ways * 64 bytes per line
+    Dtags             16K  = 64 indexes * 16 ways *  8 bytes per tag * 2 tags (load / store)
+    Dtlb               6K  = 16 indexes * 12 ways * 16 bytes per tag * 2 tlbs (load / store)
+    Icache            64K  = 64 indexes * 16 ways * 64 bytes per line
+    Itags              8K  = 64 indexes * 16 ways *  8 bytes per tag
+    Itlb               6K  = 16 indexes * 12 ways * 16 bytes per tag * 2 
+    L2cache         1152K  = 512 indexes * 32 ways * 64 bytes per line
+    L2tags           128K  = 512 indexes * 32 ways * (8 bytes per tag + 8 bytes per data ECC)
+                   -------
+    Total          1444K  = 1478656 decimal
+    *********************/
+
+//------------------------------------------------------------
+//--TRACER MSR SUMMARY----------------------------------------
+//------------------------------------------------------------
+  #define TR0_MSR_ADDR  0x317C  // 16b PROTECTED MSR, enables & controls general tracer behavior
+  #define TR1_MSR_ADDR  0x1301  // specifies events to watch for
+  #define TR2_MSR_ADDR  0x1302  // specifies 1-4 types of actions for each event
+  #define TR3_MSR_ADDR  0x1303  // specifies the dump/smm actions for each of the 4 possible types in TR2/TR18
+  #define TR4_MSR_ADDR  0x1304  // specifies the addr to use for tracer smm (analogous to SMMBASE)
+  #define TR5_MSR_ADDR  0x1305  // specifies the phy memory addr to use for starting a dump
+  #define TR6_MSR_ADDR  0x1306  // specifies the control actions for each of the 4 possible types in TR2/TR18
+  #define TR7_MSR_ADDR  0x1307  // specifies the inst interval for timer-driven events
+  
+  #define TR8_MSR_ADDR  0x1308  // pseudo pseudo clks to wait for preq for TR_CTRL_PROBE_MORE_TIMEOUT_BIT
+                                // OR in dual core tracer-stnc mode, this value is the max LOOP COUNT (32b) 
+                                // for waiting for other core to finish tracer
+
+  #define TR9_MSR_ADDR  0x1309  // defintion of "counter event"
+  
+  #define TR14_MSR_ADDR 0x130E  // 32b contigous mem dump wrap addr
+                                //     addr of 8B block just past end of last byte of dump area
+                                //     dump area must BE 8B ALIGNED
+                                //     the wrap compare is EQUAL addr of next dump with this implied addr
+                                //     ONLY 32 BITS -> 35b of addressing
+  #define TR18_MSR_ADDR 0x1312  // 64b high part of TR2 definign type for bits 32-63 of TR1
+
+  
+  #define TR_RELOAD     0x317B  // reload stuff pointed to by physical addr in edx:eax for RDMSR
+                                // if SMM_DUMP is reloaded, execution continues at the cs:ip reloaded (like RSM
+                                // if no smm_dump relaoded, 
+
+//-------------------------------------------------------------
+//--TR0 (CONTROL) DETAIL---------------------------------------
+//-------------------------------------------------------------
+    #define  TR0_ENABLE_BIT             0     // enables tracer
+    #define  TR0_NORESET_DUMP_ADDR_BIT  1     // each dump continues with "current" mem addr                      
+                                              //  default (0) is reset addr to TR5 at start of each event
+                                              //  if set, suppresses the 65K offsets in dump addresses for variou types
+    #define  TR0_START_TR7_COUNTING_BIT 2     // starts TR7 counting
+    #define  TR0_CAUSE_CTR_EVENT_BIT    3     // causes counter event after the WRMSR 
+    #define  TR0_DUMP_WRAP_BIT          4     // continous mem dump has wrapped, can be reset by WRMSR
+    #define  TR0_DUMP_TO_SPROC_BIT      5     // dump to sproc instead of mem
+                                          
+    #define  TR0_SUPPRESS_DUMP_BIT      6     // suppress dump prior to reload
+    #define  TR0_RELOAD_IGNORE_VERSION_BIT    7     // causes reload to ignore the tracer vewrsion check & attempt to reload whatever
+                                                    // else if reload hdr version mismatches realod code version we siliently ignore reload 
+
+    #define  TR0_RELOAD_CLEAR_HALT_BIT  8     // on reload, clear the LSTATE halt bit if set.
+    #define  TR0_USE_UNCORE_TR7_BIT     9     // for tr7, use uncore ctr (counting bus clks) instead of core ctr counting insts
+   
+    #define  TR0_ENABLE_LOGGING_BIT     10    // logging will use TR5 for the address
+   
+
+//------------------------------------------------------------
+//--TR1 (EVENT DEFINITION) DETAIL-----------------------------
+//------------------------------------------------------------
+    //  these tracer conditions are checked at .T inst execution (highest priority)
+    //  bit 0 reserved since we use bit number to identify in dumps the event that happened (& "no event" = 0)
+    //
+    // NOTE: tracer event trap is LOWEST priority of all interrupts/exception
+    #define  TR1_WRMSR_BIT        1     // checkpoint on WRMSR inst                         
+    #define  TR1_RDMSR_BIT        2     // checkpoint on RDMSR inst                         
+    #define  TR1_RDTSC_BIT        3     // checkpoint on RDTCS inst or RDTSCP                        
+    #define  TR1_RDPMC_BIT        4     // checkpoint on RDPMC inst                         
+    #define  TR1_ST_RNG_BIT       5     // checkpoint on ST_RNG inst                        
+    #define  TR1_MOV2CR_BIT       6     // checkpoint on move to CR0, CR2, CR4, CR8  NOTE: CR3 moved to TLB_GROUP
+                                        //  (except alised moves to CR8 from APIC reg writes)    
+    #define  TR1_SWINT_BIT        7     // checkpoint on any INT n inst (not INT3 or INTO)  
+    #define  TR1_SYSTHING_BIT     8     // checkpoint on SYSENTER/SYSEXIT/SYSCALL/SYSRET    
+    #define  TR1_CPUID_BIT        9     // checkpoint on CPUID inst                         
+    #define  TR1_RSM_BIT          10    // checkpoint on RSM inst        
+    #define  TR1_MWAIT_BIT        11    // checkpoint on MWAIT inst                         
+    #define  TR1_MONITOR_BIT      12    // checkpoint on MONITOR inst                       
+    #define  TR1_X86_EXCEPT_BIT   13    // checkpoint on any *x86* exception   
+                                        //
+    #define  TR1_TLB_GROUP_BIT    14    // checkpoint on any TLB action -- includes CR3
+  
+    //--next 3 happen after any transistion from the interrupt
+    //  they DO NOT happen if the interrupt is masked
+    #define  TR1_SMI_BIT          15    // checkpoint on SMI interrupt
+    #define  TR1_INTR_BIT         16    // checkpoint on INTR interrupt
+    #define  TR1_NMI_BIT          17    // checkpoint on NMI interrupt 
+   
+    #define  TR1_STPCLK_BIT       18    // checkpoint on STPCLK interrupt
+    // this happens after the STPCLK state has come & gone
+    // remember: tracer only happens at .T (& is lowest prioity)                  
+
+    #define  TR1_A20_BIT          19    // checkpoint on A20 interrupt = A20 state change 
+    // note that the state dumps ignore A20, even if we got there via A20 interrupt                   
+
+    #define  TR1_VMX_EXIT_BIT     20    // " on any VM EXIT condition          
+    #define  TR1_VMLAUNCH_BIT     21    // " on VMLAUNCH/VMRESUME inst         
+
+    #define  TR1_PREQ_BIT         22    // chkpt on PREQ interrupt                          
+    #define  TR1_IO_GROUP_BIT     23    // chkpt on IN and OUT (not string)                        
+    #define  TR1_INT_DEBUG_BIT    24    
+
+    #define  TR1_APIC_WRITE_BIT   25    // chkpt on wr to apic reg 
+    #define  TR1_APIC_READ_BIT    26    // chkpt on rd to apic reg 
+    #define  TR1_IRET_BIT         27    // chkpt on IRET           
+    #define  TR1_MC_BIT           28    // chkpt on machine check               
+
+    #define  TR1_CTR_EVENT_BIT    29    // chkpt on "performance counter event" as defined by TR9
+
+    #define  TR1_OTHER_CORE_TRIGGER_BIT  30    // chkpt if other core interrupts to say it is doing tracer dump
+
+    //  counter trap is checked when normal counter exceptions occur at .Ts  (but not on REP str iterations!)
+    #define  TR1_TR7_BIT          31    // checkpoint on TR7 inst counter (overflowing) going to 0
+
+//------------------------------------------------------------
+//--TR1 (SUB-EVENT DEFINITION) DETAIL-----------------------------
+//------------------------------------------------------------
+
+// TLB_GROUP
+     #define  TR1_TLB_GROUP_TYPE_CR3     1    // from move to CR3
+     #define  TR1_TLB_GROUP_TYPE_INVVPID 2    // from INVVPID
+     #define  TR1_TLB_GROUP_TYPE_INVEPT  3    // from INVEPT
+     #define  TR1_TLB_GROUP_TYPE_INVPCID 4    // from INVPCID
+
+// IO_GROUP
+     #define  TR1_IO_GROUP_TYPE_IN       1    // from IO READ
+     #define  TR1_IO_GROUP_TYPE_OUT      2    // from IO WRITE
+
+
+
+//------------------------------------------------------------
+//--TR2 (EVENT-BUNDLE) DETAIL---------------------------------
+//------------------------------------------------------------
+    //        2 BITS FOR EACH EVENT BIT
+    //        lo action bit = 2*event_bit
+    //        hi action bit = 2*event_bit+1
+
+    #define  TR2_TYPE_0      0   // these actions are defined further in the next register  
+    #define  TR2_TYPE_1      1     
+    #define  TR2_TYPE_2      2
+    #define  TR2_TYPE_3      3
+
+//------------------------------------------------------------
+//--TR10 (MASTER ACTION DEFINITION) DETAIL--------------------
+//------------------------------------------------------------
+//--new master dump/action control for each of the 4 types
+    // bits 15:0   defines type_0        // dump of this type offset 0 from     TR5      
+    // bits 31:16  defines type_1        // dump of this type offset 1*64K from TR5  
+    // bits 47:32  defines type_2        // dump of this type offset 2*64K from TR5  
+    // bits 63:48  defines type_3        // dump of this type offset 3*64K from TR5  
+
+    //--processed in bit order
+    #define       TR10_RESET_BIT          1  // cause reset for this event type 
+
+    #define       TR10_TR3_DUMP_BIT       8  // do dumps per TR3 for this type
+
+    #define       TR10_TR6_ACTION_BIT     12 // do actions per TR6 for this type
+
+    #define       TR10_BRANCH_TR13        15  // branch to TR13
+
+
+    //--default defined so that old tracer tests work exactly the same
+    #define       TR10_DEFAULT_TYPE     ((1<<TR10_TR3_DUMP_BIT) | (1<<TR10_TR6_ACTION_BIT))
+    #define       TR10_DEFAULT          ((TR10_DEFAULT_TYPE<<48)  | \
+                                         (TR10_DEFAULT_TYPE<<32)  | \
+                                         (TR10_DEFAULT_TYPE<<16)  | \
+                                         (TR10_DEFAULT_TYPE<<0)   )
+                                          
+//------------------------------------------------------------
+//--TR3 (DUMP DEFINITION) DETAIL--------------------
+//------------------------------------------------------------
+    //--here is the 16 bit vector defining what the dummp action is
+
+    //--subhdr control bits (these dumps appended to hdr in BIT ORDER here))
+    #define       TR_NANO_PEBS_BIT      1   
+    #define       TR_PEBS_JWAD2_BIT     2    // combined jwad2 & pebs per jason
+    #define       TR_JWAD_EXCEPT_BIT    3   
+    #define       TR_MPERF_BIT          4   
+    
+    
+    #define TR_DUMP_CORE_BIT            6  // This use tshe C5 dump mechanism and has everything you need for a core partial reset
+                                           // if this is specified it'll ignore everything else besides UNCORE
+
+
+    #define TR_DUMP_FXSAVE_BIT          8  // what fxsave saves, but DIFFERENT format, see below
+
+    #define TR_DUMP_PRAM_BIT            9  // bytes 0-1023 of pram                                                  
+    #define TR_DUMP_VMCS_STUFF_BIT      10 // misc vmcs stuff IS NOT RELOADED (cause it's in memory)  NEW
+
+    #define TR_DUMP_SMM_STATE_BIT       11  // THIS SAVE GOES BACKWARDS, so the starting addr leaps ahead      
+                                            //   by SMM_DUMP_SIZE to allow it to go backwards & then leaps ahead to the end
+                                            //    (+SMM_DUMP_SIZE)
+
+    #define TR_DUMP_UC_CORE_REGS_BIT    12  // UNCORE regs that have cores specific bits
+
+    #define TR_DUMP_APIC_BIT            13  // APIC regs                                                   
+    
+    #define TR_DUMP_CTR_REGS_BIT        14  // CORE internal control regs                                
+
+    #define TR_DUMP_UC_REGS_BIT         15   // UNCORE internal control regs
+
+
+    #define TR_VALID_DUMP_MASK  (1<<TR_NANO_PEBS_BIT    |   \
+                                 1<<TR_PEBS_JWAD2_BIT   |   \
+                                 1<<TR_JWAD_EXCEPT_BIT  |   \
+                                 1<<TR_MPERF_BIT        |   \
+                                 1<<TR_DUMP_CORE_BIT  |   \
+                                 1<<TR_DUMP_FXSAVE_BIT  |   \
+                                 1<<TR_DUMP_PRAM_BIT    |   \
+                                 1<<TR_DUMP_VMCS_STUFF_BIT    |   \
+                                 1<<TR_DUMP_SMM_STATE_BIT  |   \
+                                 1<<TR_DUMP_UC_CORE_REGS_BIT    |   \
+                                 1<<TR_DUMP_APIC_BIT       |   \
+                                 1<<TR_DUMP_CTR_REGS_BIT   | \
+                                 1<<TR_DUMP_UC_REGS_BIT   )
+
+
+//------------------------------------------------------------
+//--TR4 (TRACER SMM BASE ADDR) DETAIL-------------------------
+//------------------------------------------------------------
+// used the same as SMMBASE
+
+//------------------------------------------------------------
+//--TR5 (TRACER DUMP BASE ADDR) ------------------------------
+//------------------------------------------------------------
+// PHYSICAL addr of where to start storing each dumps     <---- physical addr used
+// the internal store address is optionally incremented/decremented or not as we store 
+//     "                         reset to TR5 for each new dump
+
+
+//------------------------------------------------------------
+//--TR6 (ACTION DEFINITION) DETAIL------------------------
+//------------------------------------------------------------
+    //--defines the 4 control action "types" for this run
+    // bits 15:0   defines type_0 
+    // bits 31:16  defines type_1
+    // bits 47:32  defines type_2
+    // bits 63:48  defines type_3
+
+    //--here is the 16 bit vector defining what the control action is
+    //  any combination can be specified. the order of handling is defiend within the code, not the order of bits
+    #define TR_CTRL_FAST_DUMP_RELOAD_BIT     0   // For DUMP set MTRR7 to WB  -- JCHEN and SRG agrees this is the right MTRR
+                                                 // For RELOAD set default MTRR to WB at the beginning of reload
+
+    #define TR_CTRL_WBINVD_L1S_BIT           1   // performs a WBINVD of the l1s
+
+
+    #define TR_CTRL_FORCE_PARTIAL_RESET_BIT  2   // all but apic/bus reset
+    #define TR_CTRL_FORCE_RESET_BIT          3   // every core thing reset
+
+    #define TR_CTRL_BRANCH_TO_TR13_BIT    4  
+
+    #define TR_CTRL_INTR_OTHER_CORE_BIT   5   // send interrupt to other core to (optionally via tr1) cause tracer event
+
+    #define TR_PERFENTER_BIT              6   // performs a "perfenter" function
+
+    #define TR_CTRL_WBIVD_BIT             7   // performs a WBINVD inst
+                                              // after last mem write from this we output 32b value = 0xFEEBDEED
+                                              // this write appears at original dump addr + 256K                                   
+
+    #define TR_CTRL_CLR_ALL_BIT           8   // clears a lot of interesting state                
+      //  - clears all branch arrays 
+      //  - clears all data prefetch data
+      //  - flushes WC bfrs
+
+
+    #define TR_CTRL_PROBE_MODE_WAIT_BIT   9   // waits for preq then go into probe mode   
+
+    #define TR_CTRL_PROBE_MODE_TIMEOUT_BIT 10  // waits TR8 clks for preq                  
+                                               //   - no preq, continue
+                                               //   - preq -> probe mode
+
+    #define TR_CTRL_RELOAD_DUMP_BIT       11   // performs a RELOAD of what's dumped!SHUTDOWN                       
+
+///    #define TR_CTRL_ASSERT_BEVO_0_BIT     12  // asserts bevo-0 pin (low, high, low) (bmr.17)
+
+    #define TR_CTRL_SHUTDOWN_BIT          13   // performs a SHUTDOWN                       
+                                         // this & SMM are mutually exclusive
+
+    #define TR_CTRL_CACHE_DUMP_BIT        14  // L2 tracer dump
+
+    #define TR_CTRL_ENTER_SMM_BIT         15  // enter smm state using TR4  instead of SMMBASE           
+       // SMMBASE (not TR4) will be saved 
+       // next RSM will load saved state from TR4 & will restore SMMBASE just liek normal RSM 
+       // must end whatever you're doing with RSM else you're in tracer mode forever
+       // the NSIP will be saved, thus a RSM will take us back to NSIP
+       // all TLBs are cleared 
+
+       // THIS ACTION IS IGNORED if we're already in SMM from a tracer event
+
+
+//------------------------------------------------------------
+//--TR7 (PERIODIC INST EVENT) ---------------------------------
+//------------------------------------------------------------
+  //  WARNING: YOU MUST TURN ON TRACER FIRST (TR0), THEN LOAD TR7
+  //  if not, i won't start the TR7 counter
+
+
+//------------------------------------------------------------
+//--TR8 (PREQ TIMEOUT) ---------------------------------------
+//------------------------------------------------------------
+// pseudo pseudo clks to wait for preq for TR_CTRL_PROBE_MORE_TIMEOUT_BIT
+
+
+//------------------------------------------------------------
+//--TR9 (COUNTER EVENT DEFINITION) ---------------------------
+//------------------------------------------------------------
+  //    15:0  counter event id
+  //    31:16 number events that cause trigger
+  //           (reloaded after each event overflow)
+
+
+//------------------------------------------------------------
+//--TR14 (CONTINUOUS DUMP WRAP LIMIT) ------------------------
+//------------------------------------------------------------
+#define TR14_DEFAULT 0xFFFFFFFFFFFFFFFF
+
+
+//------------------------------------------------------------
+//--TR18 (TR2 EXTENSION) -------------------------------------
+//------------------------------------------------------------
+// high part of TR2 definition type for bits 32-63 of TR1
+
+
+
+
+
+
+//----------------------------------------------------------------
+//--DUMP DATA FORMATS---------------------------------------------
+
+#if 0  //---------------------------------------------------------
+
+#ifdef linux
+  typedef unsigned long long  uint64;
+  typedef unsigned      long  uint32;
+  typedef uint16_t            uint16;
+
+#else
+  typedef unsigned _int64     uint64;
+  typedef unsigned _int32     uint32;
+  typedef unsigned _int16     uint16;
+
+#endif
+
+//-----------------------------------
+//  dump structure = 
+//
+//     "major header" which has interesting things like IP, inst count, what caused the event, etc.
+//      followed by 0-n separate dumps as defined by TR2/TR3 for this event (eg, smm dump, fp dump...)
+//
+//     each separate dump has a 4B header at the front (next low addr after previous dump) as follows
+
+//--DUMP PROLOG----------------------------------------------
+  struct {
+    uint32    dump_size;  // B size of this dump
+    uint16    dump_type;  // 1 bit ala TR3 defines which kind of dump this is
+    uint16    tr_version; // tracer version identifier
+  } DUMP_PROLOG;
+
+
+
+//--MAJOR HEADER-------------------------------------------
+  struct {
+    //--1st 8B
+    const uint16  magic;          // magic number (to add identification) = DEAD
+    char          tracer_version; // as defined at front of this file
+    char          cn_version;     // 
+    uint16        hdr_details;    // bits describing exactly what's in hdr
+    uint16        action_vector;  // the action vector for this event (appropriate 16b from TR6)
+
+    //--hdr-details controls
+    //  1st five 8B hdr parts are always there.
+    //  this field controls extar stuff optionally appended to hdr
+    //    this appendage has no separate "dump hdrs"
+    //    apppendage in order of bit controls
+    //
+    // the dump formats described as separate snippets below
+
+
+    //--2nd 8B
+    uint32        events;         // vector of events that have happened since last dump/action
+                                  // corresponds to TR1 select bits
+    uint16        dump_vector;    // the dump vector for this event (appropriate 16b from TR3)
+    char          last_exception_vector; 
+    char          last_swint_vector;  
+
+    //--3rd 8B
+    uint64      lip;              // 56b LINEAR IP (next inst to be executed)                  8b UNUSED
+
+    //--4th 8B
+    uint64      ctr_0;            // 40B current TR7 value                                     24b UNUSED
+
+    //--5rd 8B
+    uint64      last_lip;         // 56b LINEAR IP of last inst that completed execution       8b UNUSED
+                                                                                               
+  } BASIC_HDR;
+
+//------------------------------------------------------
+//--SUBHDR DUMPS----------------------------------------
+  //--VMCS stuff ----------------------------
+  struct {
+    uint32      vmcs_exit_reason;              
+    uint32      vmcs_exit_int_info;              
+    uint32      vmcs_idt_vector_info;              
+    uint32      vmcs_guest_activity_state;              
+    uint64      vmcs_guest_int_info;              
+    uint64      vmcs_exit_qualification;              
+    uint64      vmcs_guest_debug_exceptions;              
+  } VMCS_STUFF;
+
+                                                                                               
+
+  //--NANO_PEBS SUBHDR---------------------
+  struct {
+    uint32      eax;             // DUMP_RELOAD zx's RAX
+    uint32      ebx;             // NOT RELOADED BY DUMP_RELOAD ctrl
+    uint32      edx;             // DUMP_RELOAD zx's RDX
+    uint32      eflags;          // ecx already in hdr so might as well use the space for something 
+  } NANO_PEBS;
+
+  //--PEBS_JWAD2 SUBHDR
+  struct {
+    uint32       eflags;
+    uint32       available;
+
+    uint64       rax;
+    uint64       rbx;
+    uint64       rcx;
+    uint64       rdx;
+    uint64       rsi;
+    uint64       rdi;
+    uint64       rbp;
+    uint64       rsp;
+
+//    uint64       plir;              // the plir     
+    uint64       ctr0;              // perf ctr 0   
+    uint64       ctr1;              // perf ctr 1   WHICH IS NOW LOCAL_TR7
+    uint64       tsc;               // the real UNCORE HDW MASTER tsc-counter
+
+
+  } PEBS;
+
+
+  //--JWAD_EXCPT DUMP-------------------------------------------
+  struct {
+    uint64       c2_iir;            // stuff about last x86 inst
+    uint64       c2_xcr;            // non-interrupt xcr stuff (pending interrupts now in IPR)
+    
+    
+    uint64       msr_misc_enable;   // the msr
+
+    uint32       c1_jcr;            // vmx state & other stuff
+    uint32       gstate;            // misc state (like smm mode)
+
+    uint32       c2_xmr;            // interrupt masks
+    uint32       last_intr_ipr   ;  // IPR at time of last interrupt  ? WHAT INTRS SHOULD RECORD
+
+    uint32       cr0;             
+    uint32       cr4;
+
+    uint32       apic_ctrl; 
+    uint32       CR8;   
+
+
+    uint32       c2_ipr;            // pending INTERRUPTS (not the old xcr stuff) USED TO BE RCX
+    uint32       ecx;
+    uint64       cr2;            
+    uint64       UEXCEPT_STATE;  
+
+  } JWAD_DUMP;
+
+
+
+  //--MPERF DUMP-------------------------------------------
+  struct {
+    uint64      raw_mperf;          // bus count
+    uint64      apic_timer;         // NEW IN 0B
+  };
+
+//------------------------------------------------------
+//--FULL DUMPS------------------------------------------
+
+//--FP DUMP-------------------------------------------
+  struct {
+    uint64       fpsw;
+    uint64       fpcw;
+    uint64       fptag;
+    uint64       mxscr;
+
+    uint64       fp_ds;  // last x87 data seg
+    uint64       fp_cs;  //          cs
+    uint64       fp_la;  //          data ea
+    uint64       fp_ip;  //          inst ip
+    uint64       fp_op;  //          opcode
+
+    uint128      x87_0;  // low 80 bits are what's in TOS
+    uint128      x87_1;  //                           TOS-1
+    uint128      x87_2; 
+    uint128      x87_3; 
+    uint128      x87_4; 
+    uint128      x87_5; 
+    uint128      x87_6; 
+    uint128      x87_7; 
+      
+    uint128      xmm0;
+    uint128      xmm1;
+    uint128      xmm2;
+    uint128      xmm3;
+    uint128      xmm4;
+    uint128      xmm5;
+    uint128      xmm6;
+    uint128      xmm7;
+    uint128      xmm8;
+    uint128      xmm9;
+    uint128      xmm10;
+    uint128      xmm11;
+    uint128      xmm12;
+    uint128      xmm13;
+    uint128      xmm14;
+    uint128      xmm15;
+
+  } FP_DUMP;
+
+#endif  //-------------------------------------------------------  
+
+
+
+
+
+
+//------------------------------------------------------------
+//--INTERNALS-------------------------------------------------
+
+//--used where no further id needed beyond event number
+#define  SET_EVENT_P(flg, t)                        \
+    LOAD_PRAM_I     g0,TR_EVENT_CAUSE_ADDR;         \
+    SBN_GPR.S64     g0,g0,flg;                      \
+    JMP_ALL.D2      t;                              \
+    STORE_PRAM_I    g0,TR_EVENT_CAUSE_ADDR;         \
+    SBN_C2.mSS      RCR,RCR_TRACER_TRAP_BIT_H; // can just write rcr vs rmw, ns ok cause can't be here spec
+
+//--used where no branch needed
+#define  SET_EVENT(flg)                        \
+    LOAD_PRAM_I     g0,TR_EVENT_CAUSE_ADDR;         \
+    SBN_GPR.S64     g0,g0,flg;                      \
+    STORE_PRAM_I    g0,TR_EVENT_CAUSE_ADDR;         \
+    SBN_C2.mSS      RCR,RCR_TRACER_TRAP_BIT_H; // can just write rcr vs rmw, ns ok cause can't be here spec
+

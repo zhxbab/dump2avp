@@ -1,0 +1,472 @@
+name: UCODE_FLGS
+position: 2 and value: 00001805
+position: 3 and value: 00000000
+name: g10
+position: 4 and value: 00000049
+position: 5 and value: 00000000
+name: g15
+position: 6 and value: 00000000
+position: 7 and value: 00000000
+name: GSTATE
+position: 8 and value: 80000000
+position: 9 and value: 00000000
+name: LSTATE
+position: a and value: 00002000
+position: b and value: 00000000
+name: TSTATE
+position: c and value: 9003FFDE
+position: d and value: 00000000
+name: UEXCEPT_STATE
+position: e and value: 00000000
+position: f and value: 00000000
+name: SHADOW_RSP
+position: 10 and value: 40000000
+position: 11 and value: 00000000
+name: RAX
+position: 12 and value: 3B8248A1
+position: 13 and value: 00000000
+name: RCX
+position: 14 and value: 00000000
+position: 15 and value: 00000000
+name: RDX
+position: 16 and value: 00000046
+position: 17 and value: 00000000
+name: RBX
+position: 18 and value: 00000014
+position: 19 and value: 00000000
+name: RSP
+position: 1a and value: 03598600
+position: 1b and value: FFFFF880
+name: RBP
+position: 1c and value: 03598CD0
+position: 1d and value: FFFFF880
+name: RSI
+position: 1e and value: 00000000
+position: 1f and value: 00000000
+name: RDI
+position: 20 and value: 00000014
+position: 21 and value: 00000000
+name: R8
+position: 22 and value: 00000000
+position: 23 and value: 00000000
+name: R9
+position: 24 and value: 3B82478C
+position: 25 and value: 00000000
+name: R10
+position: 26 and value: 03017588
+position: 27 and value: FFFFF800
+name: R11
+position: 28 and value: 03598BC8
+position: 29 and value: FFFFF880
+name: R12
+position: 2a and value: 00000001
+position: 2b and value: 00000000
+name: R13
+position: 2c and value: 00000000
+position: 2d and value: 00000000
+name: R14
+position: 2e and value: 00000001
+position: 2f and value: 00000000
+name: R15
+position: 30 and value: 00000001
+position: 31 and value: 00000000
+name: ESdesc
+position: 32 and value: 0000FFFF
+position: 33 and value: 00CFF300
+name: CSdesc
+position: 34 and value: 00000000
+position: 35 and value: 00209B00
+name: SSdesc
+position: 36 and value: 0000FFFF
+position: 37 and value: 00CF9300
+name: DSdesc
+position: 38 and value: 0000FFFF
+position: 39 and value: 00CFF300
+name: FSdesc
+position: 3a and value: E0003C00
+position: 3b and value: FF40F3FA
+name: GSdesc
+position: 3c and value: 2D00FFFF
+position: 3d and value: 03CFF300
+name: TSSdesc
+position: 3e and value: 90800067
+position: 3f and value: 04008B3E
+name: GDTdesc
+position: 40 and value: 8000007F
+position: 41 and value: 0400823E
+name: IDTdesc
+position: 42 and value: 80800FFF
+position: 43 and value: 0400823E
+name: LDTdesc
+position: 44 and value: 0000FFFF
+position: 45 and value: 00CF0000
+name: VMCSdesc
+position: 46 and value: 0000FFFF
+position: 47 and value: 00008B00
+name: FSdesc_ext
+position: 48 and value: 00000000
+name: GSdesc_ext
+position: 49 and value: FFFFF800
+name: TSSdesc_ext
+position: 4a and value: FFFFF800
+name: GDTdesc_ext
+position: 4b and value: FFFFF800
+name: LDTdesc_ext
+position: 4c and value: 00000000
+name: VMCSdesc_ext
+position: 4d and value: 00000000
+name: IDTdesc_ext
+position: 4e and value: FFFFF800
+position: 4f and value: 00000000
+name: FP_SW
+position: 50 and value: 3800
+name: FP_CW
+position: 50 and value: 027F
+name: FPTAG
+position: 51 and value: 0080
+name: MXCSR
+position: 51 and value: 1F80
+name: FPDS
+position: 52 and value: 0000
+name: FPCS
+position: 52 and value: 0000
+name: FPLOP
+position: 53 and value: 00000301
+name: FPLA
+position: 54 and value: 0209BE00
+position: 55 and value: FFFFF880
+name: FPLIP
+position: 56 and value: 02E8ADC3
+position: 57 and value: 0000F800
+name: xmm0
+position: 58 and value: 00000000
+position: 59 and value: 00000000
+position: 5a and value: 00000000
+position: 5b and value: 00000000
+name: xmm1
+position: 5c and value: 00000000
+position: 5d and value: 00000000
+position: 5e and value: 00000000
+position: 5f and value: 00000000
+name: xmm2
+position: 60 and value: 00000000
+position: 61 and value: 00000000
+position: 62 and value: 00000000
+position: 63 and value: 00000000
+name: xmm3
+position: 64 and value: 00000000
+position: 65 and value: 00000000
+position: 66 and value: 00000000
+position: 67 and value: 00000000
+name: xmm4
+position: 68 and value: 00000000
+position: 69 and value: 00000000
+position: 6a and value: 00000000
+position: 6b and value: 00000000
+name: xmm5
+position: 6c and value: 00000000
+position: 6d and value: 00000000
+position: 6e and value: 00000000
+position: 6f and value: 00000000
+name: xmm6
+position: 70 and value: 00000000
+position: 71 and value: 00000000
+position: 72 and value: 00000000
+position: 73 and value: 00000000
+name: xmm7
+position: 74 and value: 00000000
+position: 75 and value: 00000000
+position: 76 and value: 00000000
+position: 77 and value: 00000000
+name: xmm8
+position: 78 and value: 00000000
+position: 79 and value: 00000000
+position: 7a and value: 00000000
+position: 7b and value: 00000000
+name: xmm9
+position: 7c and value: 00000000
+position: 7d and value: 00000000
+position: 7e and value: 00000000
+position: 7f and value: 00000000
+name: xmm10
+position: 80 and value: 00000000
+position: 81 and value: 00000000
+position: 82 and value: 00000000
+position: 83 and value: 00000000
+name: xmm11
+position: 84 and value: 00000000
+position: 85 and value: 00000000
+position: 86 and value: 00000000
+position: 87 and value: 00000000
+name: xmm12
+position: 88 and value: 00000000
+position: 89 and value: 00000000
+position: 8a and value: 00000000
+position: 8b and value: 00000000
+name: xmm13
+position: 8c and value: 00000000
+position: 8d and value: 00000000
+position: 8e and value: 00000000
+position: 8f and value: 00000000
+name: xmm14
+position: 90 and value: 00000000
+position: 91 and value: 00000000
+position: 92 and value: 00000000
+position: 93 and value: 00000000
+name: xmm15
+position: 94 and value: 00000000
+position: 95 and value: 00000000
+position: 96 and value: 00000000
+position: 97 and value: 00000000
+name: st7
+position: 98 and value: 00000000
+position: 99 and value: 9FC00000
+position: 9a and value: 00004008
+position: 9b and value: 00000000
+name: st0
+position: 9c and value: 00000000
+position: 9d and value: 00000000
+position: 9e and value: 00000000
+position: 9f and value: 00000000
+name: st1
+position: a0 and value: 00000000
+position: a1 and value: 00000000
+position: a2 and value: 00000000
+position: a3 and value: 00000000
+name: st2
+position: a4 and value: 00000000
+position: a5 and value: 00000000
+position: a6 and value: 00000000
+position: a7 and value: 00000000
+name: st3
+position: a8 and value: 00000000
+position: a9 and value: 00000000
+position: aa and value: 00000000
+position: ab and value: 00000000
+name: st4
+position: ac and value: 00000000
+position: ad and value: 00000000
+position: ae and value: 00000000
+position: af and value: 00000000
+name: st5
+position: b0 and value: 00000000
+position: b1 and value: 00000000
+position: b2 and value: 00000000
+position: b3 and value: 00000000
+name: st6
+position: b4 and value: 00000000
+position: b5 and value: 00000000
+position: b6 and value: 00000000
+position: b7 and value: 00000000
+name: ymm0
+position: b8 and value: 00000000
+position: b9 and value: 00000000
+position: ba and value: 00000000
+position: bb and value: 00000000
+name: ymm1
+position: bc and value: 00000000
+position: bd and value: 00000000
+position: be and value: 00000000
+position: bf and value: 00000000
+name: ymm2
+position: c0 and value: 00000000
+position: c1 and value: 00000000
+position: c2 and value: 00000000
+position: c3 and value: 00000000
+name: ymm3
+position: c4 and value: 00000000
+position: c5 and value: 00000000
+position: c6 and value: 00000000
+position: c7 and value: 00000000
+name: ymm4
+position: c8 and value: 00000000
+position: c9 and value: 00000000
+position: ca and value: 00000000
+position: cb and value: 00000000
+name: ymm5
+position: cc and value: 00000000
+position: cd and value: 00000000
+position: ce and value: 00000000
+position: cf and value: 00000000
+name: ymm6
+position: d0 and value: 00000000
+position: d1 and value: 00000000
+position: d2 and value: 00000000
+position: d3 and value: 00000000
+name: ymm7
+position: d4 and value: 00000000
+position: d5 and value: 00000000
+position: d6 and value: 00000000
+position: d7 and value: 00000000
+name: ymm8
+position: d8 and value: 00000000
+position: d9 and value: 00000000
+position: da and value: 00000000
+position: db and value: 00000000
+name: ymm9
+position: dc and value: 00000000
+position: dd and value: 00000000
+position: de and value: 00000000
+position: df and value: 00000000
+name: ymm10
+position: e0 and value: 00000000
+position: e1 and value: 00000000
+position: e2 and value: 00000000
+position: e3 and value: 00000000
+name: ymm11
+position: e4 and value: 00000000
+position: e5 and value: 00000000
+position: e6 and value: 00000000
+position: e7 and value: 00000000
+name: ymm12
+position: e8 and value: 00000000
+position: e9 and value: 00000000
+position: ea and value: 00000000
+position: eb and value: 00000000
+name: ymm13
+position: ec and value: 00000000
+position: ed and value: 00000000
+position: ee and value: 00000000
+position: ef and value: 00000000
+name: ymm14
+position: f0 and value: 00000000
+position: f1 and value: 00000000
+position: f2 and value: 00000000
+position: f3 and value: 00000000
+name: ymm15
+position: f4 and value: 00000000
+position: f5 and value: 00000000
+position: f6 and value: 00000000
+position: f7 and value: 00000000
+name: C0_MOB_CTRL
+position: f8 and value: 04003100
+position: f9 and value: 00000080
+name: FCR56
+position: fa and value: 00000000
+position: fb and value: 00020000
+name: APICBASE
+position: fc and value: FEE00900
+position: fd and value: 00000000
+name: FCR55
+position: fe and value: 00000000
+position: ff and value: 00000420
+name: TCR
+position: 100 and value: 00000000
+name: JCR
+position: 101 and value: 00617D00
+name: CR0
+position: 102 and value: 80050031
+name: FCR16
+position: 103 and value: 00000000
+name: EFER
+position: 104 and value: 00000D01
+name: CRC32_POLY
+position: 105 and value: 05EC76F1
+name: MISC_ENABLE
+position: 106 and value: 00153C89
+position: 107 and value: 00000000
+name: FCR14
+position: 108 and value: 00002100
+position: 109 and value: 01800700
+name: FCR3
+position: 10a and value: 00040018
+position: 10b and value: 00000000
+name: FCR15
+position: 10c and value: 88100000
+position: 10d and value: 20000800
+name: CR4
+position: 10e and value: 000006F8
+position: 10f and value: 00000000
+name: SYSENTER_EIP_64
+position: 110 and value: 00000000
+position: 111 and value: 00000000
+name: FCR57
+position: 112 and value: F8400384
+position: 113 and value: 000000C8
+name: IP
+position: 114 and value: 03406A2C
+position: 115 and value: FFFFF800
+name: TERRY_CONTROL
+position: 116 and value: 02007B7F
+position: 117 and value: 00000040
+name: TIMEOUT_CTR
+position: 118 and value: FFF00000
+position: 119 and value: 00000000
+name: ICR
+position: 11a and value: 00000000
+name: IMR
+position: 11b and value: 00000003
+name: DR6
+position: 11c and value: FFFF0FF0
+name: DUMMY
+position: 11d and value: 00000000
+name: PERF_CNT_0_H
+position: 11e and value: 00000000
+position: 11f and value: 00000000
+name: PERF_CNT_1_H
+position: 120 and value: FFFC0000
+position: 121 and value: 000000FF
+name: PERF_CNT_2_H
+position: 122 and value: 00000000
+position: 123 and value: 00000000
+name: DISPATCH_CTR_H
+position: 124 and value: 00000000
+position: 125 and value: 00000000
+name: DUMMY_1
+position: 126 and value: 00000000
+position: 127 and value: 00000000
+name: PERF_CNT_5_H
+position: 128 and value: 00000000
+position: 129 and value: 00000000
+name: PERF_CNT_6_H
+position: 12a and value: 00000000
+position: 12b and value: 00000000
+name: PERF_CNT_7_H
+position: 12c and value: 00000000
+position: 12d and value: 00000000
+name: PERF_CCCR_0_H
+position: 12e and value: 00000700
+position: 12f and value: 00000000
+name: PERF_CCCR_1_H
+position: 130 and value: 08431000
+position: 131 and value: 00000000
+name: PERF_CCCR_2_H
+position: 132 and value: 00002700
+position: 133 and value: 00000000
+name: DUMMY_2
+position: 134 and value: 00000000
+position: 135 and value: 00000000
+name: DUMMY_3
+position: 136 and value: 00000000
+position: 137 and value: 00000000
+name: PERF_CCCR_5_H
+position: 138 and value: 00405000
+position: 139 and value: 00000000
+name: PERF_CCCR_6_H
+position: 13a and value: 00406082
+position: 13b and value: 00000000
+name: PERF_CCCR_7_H
+position: 13c and value: 00407083
+position: 13d and value: 00000000
+name: APERF_CTR_H
+position: 13e and value: 00000000
+position: 13f and value: 00000000
+name: MPERF_CTR_H
+position: 140 and value: 00000000
+position: 141 and value: 00000000
+name: FIXED_CTRL_H
+position: 142 and value: 00000000
+position: 143 and value: 00000000
+name: GLOBAL_STATUS_H
+position: 144 and value: 00000000
+position: 145 and value: 00000000
+name: GLOBAL_CTRL_H
+position: 146 and value: 0000000F
+position: 147 and value: 00000007
+name: GLOBAL_OVF_CTRL_H
+position: 148 and value: 00000000
+position: 149 and value: 00000000
+name: EFLAGS
+position: 14a and value: 00000297
+name: DUMMY_4
+position: 14b and value: 00000000

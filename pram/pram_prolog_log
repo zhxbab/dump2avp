@@ -1,0 +1,714 @@
+name: CR2
+position: 2 and value: 08F07000
+position: 3 and value: FFFFF980
+name: IA32_LSTAR
+position: 4 and value: 02E86BC0
+position: 5 and value: FFFFF800
+name: SYSEXIT_CSDESC_32
+position: 6 and value: 0000FFFF
+position: 7 and value: 00CFFB00
+name: SYSEXIT_CSDESC_64
+position: 8 and value: 0000FFFF
+position: 9 and value: 00AFFB00
+name: SYSENTER_CS
+position: a and value: 00000000
+name: LA_DESC0
+name: LA_DESC1
+position: b and value: 00007EFF
+name: FSR0
+position: c and value: 01030000
+position: d and value: 00000000
+name: ES_PRAM
+name: CS_PRAM
+position: e and value: 0010002B
+name: SS_PRAM
+name: DS_PRAM
+position: f and value: 002B0018
+name: FS_PRAM
+name: GS_PRAM
+position: 10 and value: 002B0053
+name: TR_PRAM
+name: LDT_PRAM
+position: 11 and value: 00000040
+name: ALT_BOOT_ADDR
+position: 12 and value: 00000000
+position: 13 and value: 00000000
+name: CR3
+position: 14 and value: 00187000
+position: 15 and value: 00000000
+name: LOCAL_CONTEXT_ENT0
+position: 16 and value: 00187000
+position: 17 and value: 40000000
+name: LOCAL_CONTEXT_ENT1
+position: 18 and value: 00000000
+position: 19 and value: 00010000
+name: LOCAL_CONTEXT_ENT2
+position: 1a and value: 00000000
+position: 1b and value: 00020000
+name: LOCAL_CONTEXT_ENT3
+position: 1c and value: 00000000
+position: 1d and value: 00030000
+name: DR7
+position: 1e and value: 00000400
+position: 1f and value: 00000000
+name: FCR4
+position: 20 and value: 00000474
+position: 21 and value: 000006FE
+name: FCR5
+position: 22 and value: 00000001
+position: 23 and value: CFEF8000
+name: FCR0
+position: 24 and value: BFCBFBFF
+position: 25 and value: 77FA63EB
+name: FCR1
+position: 26 and value: 2C100800
+position: 27 and value: 00000121
+name: FCR46
+position: 28 and value: 00000000
+position: 29 and value: 00000000
+name: FCR2
+position: 2a and value: 00003DFC
+position: 2b and value: 00000000
+name: TPM_CTRL
+position: 2c and value: 00000000
+position: 2d and value: 01000006
+name: PWR_CTRL_LO
+position: 2e and value: 00090820
+position: 2f and value: 169B060A
+name: MFG_ID
+position: 30 and value: 240EC6F2
+position: 31 and value: B4180C59
+name: PSN_LO
+position: 32 and value: A02FE6BA
+position: 33 and value: 0E5C1901
+name: PSN_HI
+position: 34 and value: C4295CCD
+position: 35 and value: F22655C2
+name: MSR_PASSWD_LO
+position: 36 and value: 73AC1757
+position: 37 and value: 3675828B
+name: PATCHX_ID
+position: 38 and value: 00005005
+name: HIGHEST_PATCHRAM_USED
+position: 39 and value: 0000FFFF
+name: TR0
+position: 3a and value: 00000005
+position: 3b and value: 00000000
+name: GLOBAL_CONTEXT_EPTP_ENT0
+position: 3c and value: 00000000
+position: 3d and value: 00000000
+name: GLOBAL_CONTEXT_EPTP_ENT1
+position: 3e and value: 00000000
+position: 3f and value: 40000000
+name: GLOBAL_CONTEXT_EPTP_ENT2
+position: 40 and value: 00000000
+position: 41 and value: 80000000
+name: GLOBAL_CONTEXT_EPTP_ENT3
+position: 42 and value: 00000000
+position: 43 and value: C0000000
+name: HARDWARE_CR3
+position: 44 and value: 00187000
+position: 45 and value: 00000000
+name: VPID
+name: GLOBAL_CONTEXT_VPID_ENT0
+position: 46 and value: 00000000
+name: GLOBAL_CONTEXT_VPID_ENT1
+name: GLOBAL_CONTEXT_VPID_ENT2
+position: 47 and value: 00000000
+name: GLOBAL_CONTEXT_VPID_ENT3
+position: 48 and value: 00000000
+position: 49 and value: 00000000
+name: FCR17
+position: 4a and value: 000C25AB
+position: 4b and value: 00000007
+name: KERNEL_GS_BASE
+position: 4c and value: FFFAC000
+position: 4d and value: 000007FF
+name: SYSENTER_ESP
+position: 4e and value: 00000000
+position: 4f and value: 00000000
+name: IA32_STAR
+position: 50 and value: 00000000
+position: 51 and value: 00230010
+name: IA32_CSTAR
+position: 52 and value: 02E86900
+position: 53 and value: FFFFF800
+name: IA32_BIOS_SIG
+position: 54 and value: 00000000
+position: 55 and value: 00005005
+name: VMX_BASIC
+position: 56 and value: 00000007
+position: 57 and value: 00D80400
+name: VMX_PINBASED_CTLS
+position: 58 and value: 00000016
+position: 59 and value: 0000003F
+name: VMX_PROCBASED_CTLS
+position: 5a and value: 0401E172
+position: 5b and value: FFF9FFFE
+name: VMX_PROCBASED_CTLS2
+position: 5c and value: 00000000
+position: 5d and value: 00001CFE
+name: VMX_EXIT_CTLS
+position: 5e and value: 00036DFF
+position: 5f and value: 003FFFFF
+name: VMX_ENTRY_CTLS
+position: 60 and value: 000011FF
+position: 61 and value: 0000FFFF
+name: VMX_EPT_VPID_CAP
+position: 62 and value: 06134141
+position: 63 and value: 00000F01
+name: VMX_TRUE_PINBASED_CTLS
+position: 64 and value: 00000016
+position: 65 and value: 0000003F
+name: VMX_TRUE_PROCBASED_CTLS
+position: 66 and value: 04006172
+position: 67 and value: FFF9FFFE
+name: VMX_TRUE_EXIT_CTLS
+position: 68 and value: 00036DFB
+position: 69 and value: 003FFFFF
+name: VMX_TRUE_ENTRY_CTLS
+position: 6a and value: 000011FB
+position: 6b and value: 0000FFFF
+name: VMX_MISC
+position: 6c and value: 000401E0
+position: 6d and value: 00000000
+name: VMX_CR0_FIXED0
+position: 6e and value: 80000021
+position: 6f and value: 00000000
+name: VMX_CR0_FIXED1
+position: 70 and value: FFFFFFFF
+position: 71 and value: 00000000
+name: VMX_CR4_FIXED0
+position: 72 and value: 00002000
+position: 73 and value: 00000000
+name: VMX_CR4_FIXED1
+position: 74 and value: 003727FF
+position: 75 and value: 00000000
+name: VMX_VMCS_ENUM
+position: 76 and value: 0000002A
+position: 77 and value: 00000000
+name: FCR6
+position: 78 and value: 68532020
+position: 79 and value: 68676E61
+name: FCR8
+position: 7a and value: 00000000
+position: 7b and value: 00000000
+name: FCR9
+position: 7c and value: 00000000
+position: 7d and value: 00000000
+name: FCR10
+position: 7e and value: 00000000
+position: 7f and value: 00000000
+name: FCR11
+position: 80 and value: 00000000
+position: 81 and value: 00000000
+name: FCR12
+position: 82 and value: 00000000
+position: 83 and value: 00000000
+name: FCR13
+position: 84 and value: 00000000
+position: 85 and value: 00000000
+name: TURBO_MODE_CONFIG_2
+position: 86 and value: 00000000
+position: 87 and value: 00000000
+name: PAD67
+position: 88 and value: 00000000
+position: 89 and value: 00000000
+name: FCR7
+position: 8a and value: 20206961
+position: 8b and value: 00000000
+name: PERF_GLOBAL_CTRL
+position: 8c and value: FFFFFFFF
+position: 8d and value: FFFFFFFF
+name: TR2
+position: 8e and value: 77FBF2AC
+position: 8f and value: 01000005
+name: TR3
+position: 90 and value: 000BB249
+position: 91 and value: 000B0003
+name: TR4
+position: 92 and value: 00000000
+position: 93 and value: 00000000
+name: TR5
+position: 94 and value: 40000000
+position: 95 and value: 00000000
+name: TR6
+position: 96 and value: 00002180
+position: 97 and value: 00000800
+name: TR7
+position: 98 and value: FFFC0000
+position: 99 and value: FFFFFFFF
+name: TR1
+position: 9a and value: 9003FFDE
+position: 9b and value: 00000000
+name: DS_AREA
+position: 9c and value: 00000000
+position: 9d and value: 00000000
+name: FCR0_FUSES
+position: 9e and value: 00000000
+position: 9f and value: 00000000
+name: FCR1_FUSES
+position: a0 and value: 00000000
+position: a1 and value: 00000000
+name: FCR3_RESET
+position: a2 and value: 00000018
+position: a3 and value: 00000000
+name: SYSEXIT_SSDESC
+position: a4 and value: 0000FFFF
+position: a5 and value: 00CFF300
+name: VMXON_PTR
+position: a6 and value: 00000000
+position: a7 and value: 00000000
+name: CURRENT_VMCS_DESC
+position: a8 and value: 0000FFFF
+position: a9 and value: 00008B00
+name: VMX_IIR_SAVE
+position: aa and value: 00000000
+position: ab and value: 00000000
+name: VMX_EXCEPTION_CS_DESC
+position: ac and value: 00000000
+position: ad and value: 00000000
+name: CR4_ALLOWED_MASK
+position: ae and value: 003767FF
+position: af and value: 00000000
+name: FCR0_ALLOWED_MASK
+position: b0 and value: FFFFFFFF
+position: b1 and value: FFFFFFFF
+name: FCR1_ALLOWED_MASK
+position: b2 and value: 2E100800
+position: b3 and value: 00000121
+name: IO_RSTRT_ECX
+position: b4 and value: 00000800
+position: b5 and value: 00000000
+name: IO_RSTRT_ESI
+position: b6 and value: 00000002
+position: b7 and value: 00000000
+name: IO_RSTRT_EDI
+position: b8 and value: 00000001
+position: b9 and value: 00000000
+name: IO_RSTRT_EIP
+position: ba and value: 03DF4755
+position: bb and value: FFFFF880
+name: IO_RSTRT_MEM
+position: bc and value: 00000000
+position: bd and value: 00000000
+name: FCR82
+position: be and value: 00000040
+position: bf and value: 10004000
+name: POWER_CTL
+position: c0 and value: 00000000
+position: c1 and value: 00000000
+name: SMM_TRANSFER_PTR
+position: c2 and value: 00000000
+position: c3 and value: 00000000
+name: VMX_EXCEPTION_SS_DESC
+position: c4 and value: 00000000
+position: c5 and value: 00000000
+name: TR18
+position: c6 and value: 00000000
+position: c7 and value: 00000000
+name: SP_CTRL0
+position: c8 and value: 00000000
+position: c9 and value: 00000000
+name: SP_CTRL1
+position: ca and value: 00000000
+position: cb and value: 00000000
+name: TR14
+position: cc and value: FFFFFFFF
+position: cd and value: FFFFFFFF
+name: PROC_NAME_BANK_0
+position: ce and value: 20202020
+position: cf and value: 20202020
+name: PROC_NAME_BANK_1
+position: d0 and value: 20202020
+position: d1 and value: 20202020
+name: PROC_NAME_BANK_2
+position: d2 and value: 20202020
+position: d3 and value: 43202020
+name: PROC_NAME_BANK_3
+position: d4 and value: 6175512D
+position: d5 and value: 726F4364
+name: PROC_NAME_BANK_4
+position: d6 and value: 43204D65
+position: d7 and value: 30303634
+name: PROC_NAME_BANK_5
+position: d8 and value: 302E3240
+position: d9 and value: 007A4847
+name: SP_CTRL2
+position: da and value: 00000000
+position: db and value: 00000000
+name: FCR35
+position: dc and value: 00000000
+position: dd and value: 00000000
+name: TURBO_MODE_CONFIG_1
+position: de and value: 00000000
+position: df and value: 00000000
+name: TR_EVENT_CAUSE
+position: e0 and value: 80000000
+position: e1 and value: 00000000
+name: LAST_PAUSE_TIME
+position: e2 and value: 00000000
+position: e3 and value: 00000000
+name: FIRST_PAUSE_TIME
+position: e4 and value: 00000000
+position: e5 and value: 00000000
+name: RESTART_IP_SAVE
+position: e6 and value: 00000000
+position: e7 and value: 00000000
+name: PWR_CTRL_HI
+position: e8 and value: 3E9D2E9C
+position: e9 and value: 00003E9D
+name: DYNAMIC_PWR_CTRL
+position: ea and value: 00010042
+position: eb and value: 00020001
+name: IDT_EFLAGS_TO_SAVE_SHADOW
+position: ec and value: 00000287
+position: ed and value: 00000000
+name: MSR_IA32_TSC_ADJUST
+position: ee and value: E7ECC16E
+position: ef and value: FFFFFFE6
+name: PRNG_CNTRL
+position: f0 and value: 00000000
+position: f1 and value: 00000000
+name: PRNG_DATA0
+position: f2 and value: 00000000
+position: f3 and value: 00000000
+name: PRNG_DATA1
+position: f4 and value: 00000000
+position: f5 and value: 00000000
+name: PRNG_SEED
+position: f6 and value: 240EC6F2
+position: f7 and value: B4180C59
+name: PRNG_SEED_DETERMINED
+position: f8 and value: 00000000
+position: f9 and value: 00000000
+name: PRNG_KEY1
+position: fa and value: 240EC6F2
+position: fb and value: B4180C59
+name: PRNG_KEY2
+position: fc and value: 240EC6F2
+position: fd and value: B4180C59
+name: SAVED_UEXCEPT
+position: fe and value: 00000000
+position: ff and value: 00000000
+name: PATCH_OVERLAY_START
+position: 100 and value: F8400384
+position: 101 and value: 000000C8
+name: MSR_CORE_SCRATCH_BIOS
+position: 102 and value: 00000000
+position: 103 and value: 00000000
+name: MSR_CORE_SCRATCH_0
+position: 104 and value: 00000000
+position: 105 and value: 00000000
+name: OLD_XCR
+position: 106 and value: 00000000
+position: 107 and value: 00000000
+name: DR7_SAVE
+position: 108 and value: 00000000
+name: MSR_IO_BASE_P
+position: 109 and value: 00000814
+name: MSR_IO_CAPT_P
+position: 10a and value: 00030814
+name: FSR1
+position: 10b and value: F8400380
+name: IA32_FMASK
+position: 10c and value: 00004700
+name: IA32_SMM_MONITOR_CTL
+position: 10d and value: 00000000
+name: VMX_JCR_SAVE
+position: 10e and value: 00615D00
+name: VMX_EFLAGS_SAVE
+position: 10f and value: 00000000
+name: VMX_INTERRUPTION_INFO
+position: 110 and value: 000000B4
+name: IO_RSTRT_STATE
+position: 111 and value: F0120014
+name: SMM_XMR
+position: 112 and value: 00000003
+name: CST_CONTROL
+position: 113 and value: 01000401
+name: TR8
+position: 114 and value: 00000000
+name: CURRENT_VMCS_DESC_EXT
+position: 115 and value: 00000000
+name: TURBO_MODE_HCR3_SAVE
+position: 116 and value: 2A750090
+name: SMI_CNT
+position: 117 and value: 00000560
+name: INTR_CNT
+position: 118 and value: 005E1B8E
+name: NMI_CNT
+position: 119 and value: 00000000
+name: A20_CNT
+position: 11a and value: 00000000
+name: MC_CNT
+position: 11b and value: 00000000
+name: SKIP_MSRGP_CNT
+position: 11c and value: 00000004
+name: TRACER_DEADLOCK_RESTART_CNT
+position: 11d and value: 00000000
+name: WBINVD_DEADLOCK_RESTART_CNT
+position: 11e and value: 00000000
+name: MWAIT_DEADLOCK_BLOWOFF_CNT
+position: 11f and value: 00000000
+name: PATCH_DEADLOCK_BLOWOFF_CNT
+position: 120 and value: 00000000
+name: LAST_SYNC_CODE
+position: 121 and value: 00800411
+name: TR9
+position: 122 and value: 00000000
+name: AUX_TSC
+position: 123 and value: 00000000
+name: EFER_ALLOWED_MASK
+position: 124 and value: 00002D01
+name: PWR_ACTION
+position: 125 and value: 00000000
+name: LAST_INTR_IPR
+position: 126 and value: 00009000
+name: MWAIT_EF_SAVE
+position: 127 and value: 00000000
+name: HCR2_PRAM
+position: 128 and value: 0000C800
+name: HCR7_PRAM
+position: 129 and value: 00000000
+name: LAST_SLEEP_CODE
+position: 12a and value: 00000000
+name: PERF_STATUS_UP
+position: 12b and value: 00000000
+name: IA32_FEATURE_CONTROL
+name: IA32_MONITOR_FILTER_SIZE
+position: 12c and value: 00400005
+name: SMI_CR4_SAVE
+name: SMI_MTF_SAVE
+position: 12d and value: 000006F8
+name: PERF_CTRL0
+name: PERF_CTRL1
+position: 12e and value: 00000000
+name: PERF_CTRL2
+name: ROM_VERSION_INSTALLED
+position: 12f and value: 00000000
+name: REAL_PSRUP_MAX
+name: AES_VALID
+position: 130 and value: 00000C63
+name: PRAM_OVERLAY_BASE
+name: XCR0
+name: MCG_STATUS
+position: 131 and value: 00010000
+name: VMX_CPL_SAVE
+name: MAX_RATIO
+name: PADDR_SIZE
+name: FSB_FREQ
+position: 132 and value: 04240C00
+name: FUSE_ECC_RESULT
+name: TR1_SUB_FIELD
+name: NAP_VID_OFFSET
+name: COMPOSITE_CST
+position: 133 and value: 00000000
+name: ORIG_VRM_RCVRY_DEL
+name: TR_SWINT_VECTOR
+name: UC_WAKEUP_DELAY
+name: VDD_DEAD_FLG
+position: 134 and value: 0014B400
+name: PHYS_CORE_ID
+name: VIRT_CORE_ID
+name: VIRT_NUM_CORES
+name: GLOBAL_CONTEXT
+position: 135 and value: 00040000
+name: IA32_ENERGY_PERF_BIAS
+name: NUM_IO_TRANSLATE_DESC
+name: PATCH_OVERLAY_INSTALLED
+name: PATCH_STATE
+position: 136 and value: 02000000
+name: FUSE_CTRLS
+name: REPAIR_REBLOW_CTR
+position: 137 and value: 003C0000
+name: MTRR_PHYSBASE0
+position: 138 and value: 00000006
+position: 139 and value: 00000000
+name: MTRR_PHYSMASK0
+position: 13a and value: 80000800
+position: 13b and value: 0000000F
+name: MTRR_PHYSBASE1
+position: 13c and value: 80000006
+position: 13d and value: 00000000
+name: MTRR_PHYSMASK1
+position: 13e and value: C0000800
+position: 13f and value: 0000000F
+name: MTRR_PHYSBASE2
+position: 140 and value: C0000006
+position: 141 and value: 00000000
+name: MTRR_PHYSMASK2
+position: 142 and value: F0000800
+position: 143 and value: 0000000F
+name: MTRR_PHYSBASE3
+position: 144 and value: 40000000
+position: 145 and value: 00000000
+name: MTRR_PHYSMASK3
+position: 146 and value: F0000800
+position: 147 and value: 0000000F
+name: MTRR_PHYSBASE4
+position: 148 and value: 00000006
+position: 149 and value: 00000001
+name: MTRR_PHYSMASK4
+position: 14a and value: E0000800
+position: 14b and value: 0000000F
+name: MTRR_PHYSBASE5
+position: 14c and value: 00000000
+position: 14d and value: 00000000
+name: MTRR_PHYSMASK5
+position: 14e and value: 00000000
+position: 14f and value: 00000000
+name: MTRR_PHYSBASE6
+position: 150 and value: 00000000
+position: 151 and value: 00000000
+name: MTRR_PHYSMASK6
+position: 152 and value: 00000000
+position: 153 and value: 00000000
+name: MTRR_PHYSBASE7
+position: 154 and value: 00000000
+position: 155 and value: 00000000
+name: MTRR_PHYSMASK7
+position: 156 and value: 00000000
+position: 157 and value: 00000000
+name: MTRR_FIX64K_00000
+position: 158 and value: 06060606
+position: 159 and value: 06060606
+name: MTRR_FIX16K_80000
+position: 15a and value: 06060606
+position: 15b and value: 06060606
+name: MTRR_FIX16K_A0000
+position: 15c and value: 00000000
+position: 15d and value: 00000000
+name: MTRR_FIX4K_C0000
+position: 15e and value: 05050505
+position: 15f and value: 05050505
+name: MTRR_FIX4K_C8000
+position: 160 and value: 05050505
+position: 161 and value: 05050505
+name: MTRR_FIX4K_D0000
+position: 162 and value: 00000000
+position: 163 and value: 00000000
+name: MTRR_FIX4K_D8000
+position: 164 and value: 00000000
+position: 165 and value: 00000000
+name: MTRR_FIX4K_E0000
+position: 166 and value: 00000000
+position: 167 and value: 00000000
+name: MTRR_FIX4K_E8000
+position: 168 and value: 05050505
+position: 169 and value: 05050505
+name: MTRR_FIX4K_F0000
+position: 16a and value: 05050505
+position: 16b and value: 05050505
+name: MTRR_FIX4K_F8000
+position: 16c and value: 05050505
+position: 16d and value: 05050505
+name: MTRR_DEF_TYPE
+position: 16e and value: 00000C00
+position: 16f and value: 00000000
+name: SMRR_BASE
+position: 170 and value: CFF00004
+position: 171 and value: 00000000
+name: SMRR_MASK
+position: 172 and value: FFF00800
+position: 173 and value: FFFFFFFF
+name: MTRR_DEF_TYPE_SHADOW
+position: 174 and value: 00000000
+position: 175 and value: 00000000
+name: PDPT0
+position: 176 and value: 00000000
+position: 177 and value: 00000000
+name: PDPT1
+position: 178 and value: 00000000
+position: 179 and value: 00000000
+name: PDPT2
+position: 17a and value: 00000000
+position: 17b and value: 00000000
+name: PDPT3
+position: 17c and value: 00000000
+position: 17d and value: 00000000
+name: DR0
+position: 17e and value: 00000000
+position: 17f and value: 00000000
+name: DR1
+position: 180 and value: 74E2650C
+position: 181 and value: 00000000
+name: DR2
+position: 182 and value: 77BFFEF0
+position: 183 and value: 00000000
+name: DR3
+position: 184 and value: 77702A30
+position: 185 and value: 00000000
+name: PAT
+position: 186 and value: 00070106
+position: 187 and value: 00070106
+name: HARDWARE_EPTP
+position: 188 and value: 00000000
+position: 189 and value: 00000000
+name: ACFLAGS
+position: 18a and value: 00000001
+position: 18b and value: 00000064
+name: GETSEC_PARAM_1_MASK
+position: 18c and value: 00000000
+name: GETSEC_PARAM_1_VERSION
+position: 18d and value: 00000000
+name: GETSEC_PARAM_2_SIZE
+position: 18e and value: 00000800
+name: GETSEC_PARAM_3
+name: GETSEC_PARAM_4
+name: GETSEC_PARAM_5
+position: 18f and value: 00010003
+name: SPI_PREFIX_OPCODE_MENU
+name: SPI_OPCODE_TYPE
+position: 190 and value: 0000FEF0
+name: SPI_BASE
+position: 191 and value: 00010000
+name: SPI_OPCODE_MENU
+position: 192 and value: 00000000
+position: 193 and value: 00000000
+name: CORE_C2_RESIDENCY
+position: 194 and value: 00000000
+position: 195 and value: 00000000
+name: CORE_C3_RESIDENCY
+position: 196 and value: 00000000
+position: 197 and value: 00000000
+name: CORE_C4_RESIDENCY
+position: 198 and value: 00000000
+position: 199 and value: 00000000
+name: CORE_C5_RESIDENCY
+position: 19a and value: 00000000
+position: 19b and value: 00000000
+name: CORE_C6_RESIDENCY
+position: 19c and value: 00000000
+position: 19d and value: 00000000
+name: TEMP_DEBUG_SAVE0
+position: 19e and value: 00000000
+position: 19f and value: 00000000
+name: IO_TRANSLATE_DESC0
+position: 1a0 and value: 00000000
+position: 1a1 and value: 00000000
+name: IO_TRANSLATE_DESC1
+position: 1a2 and value: 00000000
+position: 1a3 and value: 00000000
+name: IO_TRANSLATE_DESC2
+position: 1a4 and value: 00000000
+position: 1a5 and value: 00000000
+name: IO_TRANSLATE_DESC3
+position: 1a6 and value: 00000000
+position: 1a7 and value: 00000000
+name: IO_TRANSLATE_DESC4
+position: 1a8 and value: 00000000
+position: 1a9 and value: 00000000
+name: IO_TRANSLATE_DESC5
+position: 1aa and value: 00000000
+position: 1ab and value: 00000000
+name: IO_TRANSLATE_DESC6
+position: 1ac and value: 00000000
+position: 1ad and value: 00000000
+name: IO_TRANSLATE_DESC7
+position: 1ae and value: 00000000
+position: 1af and value: 00000000
+name: LA_DESC2
+name: LA_DESC3
+position: 1b0 and value: 00000000
+position: 1b1 and value: 00000000

@@ -1,0 +1,94 @@
+name: APIC ID
+position: 4 and value: 00000000
+name: APIC VER
+position: 5 and value: 01050015
+name: APIC RESVD
+position: 6 and value: 00000000
+name: APIC RESVD
+position: 7 and value: 012000FF
+name: APIC RESVD
+position: 8 and value: 00011422
+name: APIC TPR
+position: a and value: 00000000
+name: APIC PPR
+position: c and value: 00000000
+name: APIC LDR
+position: f and value: 01000000
+name: APIC DFR
+position: 10 and value: FFFFFFFF
+name: APIC SVR
+position: 11 and value: 0000013F
+name: APIC ISR_0
+position: 12 and value: 00000000
+name: APIC ISR_1
+position: 13 and value: 00000000
+name: APIC ISR_2
+position: 14 and value: 00000000
+name: APIC ISR_3
+position: 15 and value: 00000000
+name: APIC ISR_4
+position: 16 and value: 00000000
+name: APIC ISR_5
+position: 17 and value: 00000000
+name: APIC ISR_6
+position: 18 and value: 00000000
+name: APIC ISR_7
+position: 19 and value: 00000000
+name: APIC TMR_0
+position: 1a and value: 00000000
+name: APIC TMR_1
+position: 1b and value: 00000000
+name: APIC TMR_2
+position: 1c and value: 00000000
+name: APIC TMR_3
+position: 1d and value: 00040004
+name: APIC TMR_4
+position: 1e and value: 00060004
+name: APIC TMR_5
+position: 1f and value: 000A0006
+name: APIC TMR_6
+position: 20 and value: 00000000
+name: APIC TMR_7
+position: 21 and value: 00000000
+name: APIC IRR_0
+position: 22 and value: 00000000
+name: APIC IRR_1
+position: 23 and value: 00000000
+name: APIC IRR_2
+position: 24 and value: 00000000
+name: APIC IRR_3
+position: 25 and value: 00000000
+name: APIC IRR_4
+position: 26 and value: 00000000
+name: APIC IRR_5
+position: 27 and value: 00000000
+name: APIC IRR_6
+position: 28 and value: 00000000
+name: APIC IRR_7
+position: 29 and value: 00000000
+name: APIC ESR
+position: 2a and value: 00000000
+name: APIC ICR0
+position: 32 and value: 0004002F
+name: APIC ICR1
+position: 33 and value: 01000000
+name: APIC LVTT
+position: 34 and value: 000300FD
+name: APIC LVTS
+position: 35 and value: 00010000
+name: APIC LVTP
+position: 36 and value: 000000FE
+name: APIC LVT0
+position: 37 and value: 0001003F
+name: APIC LVT1
+position: 38 and value: 000004FF
+name: APIC LVTE
+position: 39 and value: 000000E3
+name: APIC INIT_COUNT
+position: 3a and value: 00000000
+name: APIC TIMER
+position: 3b and value: 00000000
+name: APIC TIMER_DIV
+position: 40 and value: 0000000B
+name: APIC RESVD
+position: 41 and value: 00000001

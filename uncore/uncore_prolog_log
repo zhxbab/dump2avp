@@ -1,0 +1,207 @@
+name: uncore_1_HCR8
+position: 2 and value: 7004001C
+position: 3 and value: 00000000
+name: uncore_4_BMR
+position: 8 and value: 03000002
+position: 9 and value: 00000000
+name: uncore_7_HCR4
+position: e and value: 08570000
+position: f and value: 00000000
+name: uncore_8_HCR5
+position: 10 and value: 08000847
+position: 11 and value: 00000000
+name: uncore_9_HCR6
+position: 12 and value: 0000004F
+position: 13 and value: 00000000
+name: uncore_10_RING_OSCILLATOR_MSR
+position: 14 and value: 00000000
+position: 15 and value: 00000000
+name: uncore_12_PERF_CTL_MSR
+position: 18 and value: 00000C63
+position: 19 and value: 00000000
+name: uncore_13_HCR3
+position: 1a and value: 2A750090
+position: 1b and value: 00000000
+name: uncore_14_NCR
+position: 1c and value: 00000000
+position: 1d and value: 00000000
+name: uncore_15_BSR
+position: 1e and value: 00008CC9
+position: 1f and value: 00000000
+name: uncore_18_HARD_POWERONHARD_POWERON_MSR
+position: 24 and value: 03000000
+position: 25 and value: 00000000
+name: uncore_21_BUS_IDLE_MSR
+position: 2a and value: 000800FF
+position: 2b and value: 00000000
+name: uncore_22_CLOCK_MODULATION_MSR
+position: 2c and value: 00000002
+position: 2d and value: 00000000
+name: uncore_24_PERF_STATUS_MSR
+position: 30 and value: 08000C63
+position: 31 and value: 00000000
+name: uncore_25_PERF_STATUS_UP_MSR
+position: 32 and value: 08570C63
+position: 33 and value: 00000000
+name: uncore_26_THERM2_CTL_MSR
+position: 34 and value: 00000857
+position: 35 and value: 00000000
+name: uncore_28_HCR
+position: 38 and value: 00800000
+position: 39 and value: 00000000
+name: uncore_30_MSR_FSB_FREQ
+position: 3c and value: 00000000
+position: 3d and value: 00000000
+name: uncore_32_VRMCount
+position: 40 and value: 00001388
+position: 41 and value: 00000000
+name: uncore_33_PLLCount
+position: 42 and value: 00000CF0
+position: 43 and value: 00000000
+name: uncore_38_PtA
+position: 4c and value: 80000857
+position: 4d and value: 00000000
+name: uncore_39_PtB
+position: 4e and value: 8000095A
+position: 4f and value: 00000000
+name: uncore_40_PtC
+position: 50 and value: 80000A5D
+position: 51 and value: 00000000
+name: uncore_41_PtD
+position: 52 and value: 80000B60
+position: 53 and value: 00000000
+name: uncore_42_PtE
+position: 54 and value: 88000C63
+position: 55 and value: 00000000
+name: uncore_43_XCORE_CTRL
+position: 56 and value: 00000000
+position: 57 and value: 00000000
+name: uncore_54_PIDCntl
+position: 6c and value: 00000000
+position: 6d and value: 00000000
+name: uncore_56_ForceOrderCntl
+position: 70 and value: 80044FFF
+position: 71 and value: 00000000
+name: uncore_60_SpecStatus
+position: 78 and value: 00000000
+position: 79 and value: 00000000
+name: uncore_64_BUG_FIXES
+position: 80 and value: 10000000
+position: 81 and value: 00000000
+name: uncore_65_PCCR
+position: 82 and value: 00000000
+position: 83 and value: 00000000
+name: uncore_66_ICCR
+position: 84 and value: 00000000
+position: 85 and value: 00000000
+name: uncore_67_PGCR
+position: 86 and value: 10004000
+position: 87 and value: 00000000
+name: uncore_68_CGCR
+position: 88 and value: 00000040
+position: 89 and value: 00000000
+name: uncore_69_UC_MISC_ENABLE
+position: 8a and value: 00153C89
+position: 8b and value: 00000000
+name: uncore_70_PGCR2
+position: 8c and value: 03F050C6
+position: 8d and value: 00000000
+name: uncore_84_TECR
+position: a8 and value: 00000000
+position: a9 and value: 00000000
+name: uncore_85_MDCR
+position: aa and value: 00000000
+position: ab and value: 00000000
+name: uncore_89_UC_CTR_BUSCLKS_H
+position: b2 and value: F56833CF
+position: b3 and value: 00001479
+name: uncore_90_UC_CTR_CORECLKS_H
+position: b4 and value: C0713747
+position: b5 and value: 00007ADB
+name: uncore_91_UC_PERF_CTR0_H
+position: b6 and value: 256CCC49
+position: b7 and value: 00000077
+name: uncore_92_UC_PERF_CTR1_H
+position: b8 and value: 00000000
+position: b9 and value: 00000000
+name: L2_1_L2_STATUS_REG_IDX_H
+position: bc and value: 00000000
+position: bd and value: 00000000
+name: L2_2_L2_CONFIG_REG_IDX_H
+position: be and value: 60800002
+position: bf and value: 00000000
+name: L2_3_L2_SIZE_REG_IDX_H
+position: c0 and value: 00000010
+position: c1 and value: 00000040
+name: L2_8_L2_CTRL00_REG_IDX_H
+position: ca and value: 00000000
+position: cb and value: 28000000
+name: L2_9_L2_CTRL01_REG_IDX_H
+position: cc and value: 00000000
+position: cd and value: 00000010
+name: L2_10_L2_CTRL02_REG_IDX_H
+position: ce and value: 80008100
+position: cf and value: 00100613
+name: L2_11_L2_CTRL03_REG_IDX_H
+position: d0 and value: 000C4800
+position: d1 and value: 00000000
+name: L2_12_L2_CTRL04_REG_IDX_H
+position: d2 and value: 00000000
+position: d3 and value: 00000000
+name: L2_13_L2_CTRL05_REG_IDX_H
+position: d4 and value: 00000108
+position: d5 and value: 20000001
+name: L2_14_L2_CTRL06_REG_IDX_H
+position: d6 and value: 10502080
+position: d7 and value: 28000008
+name: L2_15_L2_CTRL07_REG_IDX_H
+position: d8 and value: 1042B204
+position: d9 and value: 00000002
+name: L2_16_L2_CTRL08_REG_IDX_H
+position: da and value: 08F00000
+position: db and value: 44000000
+name: L2_17_L2_CTRL09_REG_IDX_H
+position: dc and value: 08000444
+position: dd and value: 01000800
+name: L2_18_L2_CTRL10_REG_IDX_H
+position: de and value: E0000000
+position: df and value: 00001840
+name: L2_19_L2_CTRL11_REG_IDX_H
+position: e0 and value: 000E0000
+position: e1 and value: 80900000
+name: L2_20_L2_CTRL12_REG_IDX_H
+position: e2 and value: 00040000
+position: e3 and value: 009FE003
+name: L2_21_L2_CTRL13_REG_IDX_H
+position: e4 and value: 22000002
+position: e5 and value: 61088401
+name: L2_22_L2_CTRL14_REG_IDX_H
+position: e6 and value: 00010004
+position: e7 and value: 80EA0100
+name: L2_23_L2_CTRL15_REG_IDX_H
+position: e8 and value: 03FA0700
+position: e9 and value: 00000020
+name: L2_24_L2_CTRL16_REG_IDX_H
+position: ea and value: 00000000
+position: eb and value: 00000000
+name: L2_25_L2_CTRL17_REG_IDX_H
+position: ec and value: 00000000
+position: ed and value: 00000000
+name: L2_26_L2_SNOOP_ADDR_REG_IDX_H
+position: ee and value: 00000000
+position: ef and value: 00000000
+name: L2_27_L2_ERROR_REG_UC_IDX_H
+position: f0 and value: 00000000
+position: f1 and value: 00000000
+name: L2_28_L2_ERROR_REG_C0_IDX_H
+position: f2 and value: 00000000
+position: f3 and value: 00000040
+name: L2_29_L2_ERROR_REG_C1_IDX_H
+position: f4 and value: 00000000
+position: f5 and value: 00000000
+name: L2_30_L2_ERROR_REG_C2_IDX_H
+position: f6 and value: 00000000
+position: f7 and value: 00000000
+name: L2_31_L2_ERROR_REG_C3_IDX_H
+position: f8 and value: 00000000
+position: f9 and value: 00000000
